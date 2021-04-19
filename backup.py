@@ -44,9 +44,8 @@ file_info.write('\n' + str(mac) + '\t' + str(now_date()) + '\n' + '\t' + str(inf
 
 file_info.close()
 
-
-
-
 if OS.sysname == 'Linux' :
     print('linux')
     print(os.uname())
+else:
+    print('Ти рак на вінді')
