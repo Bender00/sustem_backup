@@ -19,10 +19,16 @@ def mac_address():
 # Збор інформації про систему
 def info_machines():
     import os
+
+    
+    
     info_machines = {
         'sysname' : os.uname().sysname,
         'nodename' : os.uname().nodename,
         'releace' : os.uname().release,
         'version' : os.uname().version
     }
-    return info_machines
+    for i,n in info_machines.items():
+        print(i,n)
+
+    return info_machines, i,n
