@@ -1,31 +1,42 @@
-<<<<<<< Updated upstream
-bender = 1
-=======
-from function import *
+import uuid # Для виводу MAC - адресу
+from datetime import datetime
+import os
 
-# вивод актуальної дати
-# now_date()
+#вивод актуальної дати
+def now_date():
+    now = datetime.now()
+    datetime.strftime(datetime.now(), "%Y.%m.%d %H:%M:%S")
+    return now
 
-# Виводить MAC-адрес
-# mac_address()
+#Виводить MAC-адрес
+def mac_address():
+    # print ("The MAC address in formatted way is : ", end="mac")
+    mac = (':'.join(['{:02x}'.format((uuid.getnode() >> ele) & 0xff)
+    for ele in range(0,8*6,8)][::-1]))
+    return mac
 
-# інфа про систему
-# info_machines()
+# Збор інформації про систему
+def info_machines():
+    info_machines = {
+        'mac_address' : mac_address(),
+        'sysname' : os.uname().sysname,
+        'nodename' : os.uname().nodename,
+        'releace' : os.uname().release,
+        'version' : os.uname().version
+    }
 
-# Відкриття(створення) файла
-file_info = open("info_machines.txt", mode='a', encoding='utf-8')
+    save_info(info_machines)
 
-# Записує у файл дані із змінної OS та з функції mac_address() + now_date()
-file_info.write('\n' + str(mac_address()) + '\t' + str(now_date()) + '\n' + '\t' + str(info_machines()))
+    return info_machines
 
-#with file_info as file:
-#    for item in info_machines:
-#        print(item, file=file)
+def save_info(info_machines):
+    file_info = open("info_machines.txt", mode='a', encoding='utf-8')
+    file_info.write(mac_address() + '\t' + str(now_date()) + '\n')
 
-#   print(info_machines, file=file)
+    for i,n in info_machines.items():    
+        file_info.write('\t' + i + ': ' + n + '\n')
 
-#for item in info_machines:
-#    file_info.write("%s\n" % item)
+    file_info.close()
 
-file_info.close()
->>>>>>> Stashed changes
+
+info_machines()
